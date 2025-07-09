@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MematchMarket - AI-Powered Medical Equipment Marketplace</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+        header {
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #1a2a44;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00bfff;
+            letter-spacing: 1px;
+        }
+        nav a {
+            margin-left: 1.5rem;
+            text-decoration: none;
+            color: #00bfff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #007bff;
+        }
+        .hero {
+            position: relative;
+            background: url('hero-image.PNG') no-repeat center/cover;
+            background-color: #1a2a44;
+            height: 100vh;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            overflow: hidden;
+            padding: 2rem;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('hero-image.PNG') no-repeat center/cover;
+            z-index: 1;
+            opacity: 0.7;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: left;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            max-width: 50%;
+            margin-left: auto;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #00bfff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            max-width: 600px;
+            margin-left: 0;
+            margin-right: 0;
+        }
+        .hero .availability {
+            color: #0f3f1a;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .cta-button {
+            background-color: #00bfff;
+            color: #fff;
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+            margin: 0 0.5rem;
+        }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .banner {
+            background-color: #e9f7ef;
+            padding: 1.5rem;
+            text-align: center;
+            margin: 2rem 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .banner h3 {
+            color: #28a745;
+            font-size: 1.5rem;
+        }
+        .how-it-works, .benefits, .testimonials, .signup, .categories, .our-story {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .how-it-works h2, .benefits h2, .testimonials h2, .signup h2, .categories h2, .our-story h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: #007bff;
+        }
+        .steps, .benefit-list {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        .step, .benefit {
+            width: 30%;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        .step:hover, .benefit:hover {
+            transform: translateY(-5px);
+        }
+        .step img, .benefit img {
+            width: 60px;
+            margin-bottom: 1rem;
+        }
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .category-item {
+            text-align: center;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .category-item:hover {
+            transform: translateY(-5px);
+        }
+        .category-item img {
+            width: 150px;
+            margin-bottom: 0.5rem;
+        }
+        .category-item h3 {
+            font-size: 1.1rem;
+            color: #333;
+        }
+        .how-it-works .search-box {
+            width: 100%;
+            max-width: 800px;
+            padding: 1.5rem;
+            background-color: #1a2a44;
+            border: 2px solid #00bfff;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1.1rem;
+            margin-top: 2rem;
+            resize: vertical;
+            outline: none;
+        }
+        .how-it-works .search-box::placeholder {
+            color: #00bfff;
+            opacity: 0.8;
+        }
+        .signup form {
+            display: flex;
+        justify-content: center;
+            margin-top: 1.5rem;
+        }
+        .signup input {
+            padding: 0.8rem;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 25px 0 0 25px;
+            outline: none;
+        }
+        .signup button {
+            padding: 0.8rem 1.5rem;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .signup button:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            background-color: #1a2a44;
+            color: #fff;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #00bfff;
+        }
+        .footer-column a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+        .footer-column a:hover {
+            color: #007bff;
+        }
+        .social-icons a {
+            margin-right: 1rem;
+            color: #fff;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+        .social-icons a:hover {
+            color: #007bff;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+        }
+        .footer-bottom p {
+            margin-bottom: 1rem;
+        }
+        .payment-icons img {
+            width: 40px;
+            margin-left: 0.5rem;
+        }
+        #cookie-consent {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #1a2a44;
+            color: #fff;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        #cookie-consent a {
+            color: #00bfff;
+        }
+        #cookie-consent button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        #cookie-consent button:hover {
+            background-color: #218838;
+        }
+        .our-story {
+  padding: 4rem 2rem;
+  background-color: #f5f7fa;
+}
+
+.our-story-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.left-column {
+  flex: 1;
+  min-width: 300px;
+  padding-right: 2rem;
+  text-align: left; /* ✅ چپ‌چین کردن متن */
+}
+
+.left-column h2 {
+  font-size: 2rem;
+  color: #007bff;
+  margin-bottom: 1rem; /* ✅ فاصله از پاراگراف بعدی */
+}
+
+.left-column p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 2rem; /* ✅ فاصله بین پاراگراف و دکمه‌ها */
+  line-height: 1.7;
+}
+
+.left-column .cta-button {
+  margin-right: 1rem; /* ✅ فاصله بین دکمه‌ها */
+  margin-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.right-column {
+  flex: 1;
+  min-width: 300px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.info-square {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  text-align: left; /* ✅ چپ‌چین برای متن داخل مربع‌ها */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: 150px;
+}
+
+.info-square h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #007bff;
+}
+
+.info-square p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .steps, .benefit-list {
+                flex-direction: column;
+                align-items: center;
+            }
+            .step, .benefit {
+                width: 80%;
+            }
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+            .category-item {
+                width: 80%;
+                margin: 0 auto 1rem;
+            }
+            .how-it-works .search-box {
+                max-width: 100%;
+            }
+            .our-story {
+                flex-direction: column;
+                text-align: center;
+            }
+            .our-story .left-column {
+                padding-right: 0;
+                margin-bottom: 2rem;
+            }
+            .our-story .right-column {
+                grid-template-columns: 1fr;
+            }
+            .footer-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-column {
+                margin-bottom: 2rem;
+            }
+            .footer-bottom {
+                text-align: center;
+            }
+            .payment-icons {
+                justify-content: center;
+            }
+            .signup input {
+                width: 100%;
+                border-radius: 25px;
+                margin-bottom: 1rem;
+            }
+            .signup button {
+                border-radius: 25px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">MematchMarket</div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#contact">Contact</a>
+            <a href="#imprint">Imprint</a>
+            <a href="#privacy">Privacy Policy</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Centered Image and Blurred Background -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="availability">✨ Available in Market Soon</div>
+            <h1>Revolutionize Medical Equipment Sourcing</h1>
+            <p>MematchMarket’s AI matches you with the perfect suppliers, reducing search time and boosting sales efficiency.</p>
+            <a href="#how-it-works" class="cta-button">Get Started</a>
+            <a href="#demo" class="cta-button">Watch Demo</a>
+        </div>
+    </section>
+
+    <!-- Promotional Banner -->
+    <div class="banner">
+        <h3>Join the Future of Medical Procurement – Sign Up for Early Access!</h3>
+    </div>
+
+    <!-- Explore Categories Section -->
+    <section class="categories">
+        <h2>Explore Categories</h2>
+        <div class="category-grid">
+            <div class="category-item">
+                <img src="medical-equipment.png" alt="Medical Equipment">
+                <h3>Medical Equipment</h3>
+            </div>
+            <div class="category-item">
+                <img src="consumables-and-disposables.png" alt="Consumables and Disposables">
+                <h3>Consumables and Disposables</h3>
+            </div>
+            <div class="category-item">
+                <img src="personal-protective-equipment.png" alt="Personal Protective Equipment">
+                <h3>Personal Protective Equipment (PPE)</h3>
+            </div>
+            <div class="category-item">
+                <img src="pharmaceuticals-and-medications.png" alt="Pharmaceuticals and Medications">
+                <h3>Pharmaceuticals and Medications</h3>
+            </div>
+            <div class="category-item">
+                <img src="laboratory-equipment.png" alt="Laboratory Equipment and Supplies">
+                <h3>Laboratory Equipment and Supplies</h3>
+            </div>
+            <div class="category-item">
+                <img src="orthopedic-and-rehabilitation.png" alt="Orthopedic and Rehabilitation Products">
+                <h3>Orthopedic and Rehabilitation Products</h3>
+            </div>
+            <div class="category-item">
+                <img src="dental.png" alt="Dental Products">
+                <h3>Dental Products</h3>
+            </div>
+            <div class="category-item">
+                <img src="Healthcare.png" alt="Home Healthcare Products">
+                <h3>Home Healthcare Products</h3>
+            </div>
+            <div class="category-item">
+                <img src="Medical Software and IT Solutions.png" alt="Medical Software and IT Solutions">
+                <h3>Medical Software and IT Solutions</h3>
+            </div>
+            <div class="category-item">
+                <img src="veterinary-products.png" alt="Veterinary Products">
+                <h3>Veterinary Products</h3>
+            </div>
+            <div class="category-item">
+                <img src="Aesthetic-and-Cosmetic.png" alt="Aesthetic and Cosmetic Medical Products">
+                <h3>Aesthetic and Cosmetic Medical Products</h3>
+            </div>
+            <div class="category-item">
+                <img src="Hospital-Furniture and-Fixtures.png" alt="Hospital Furniture and Fixtures">
+                <h3>Hospital Furniture and Fixtures</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- How MematchMarket Works -->
+    <section id="how-it-works" class="how-it-works">
+        <h2>How MematchMarket Works</h2>
+        <div class="steps">
+            <div class="step">
+                <h3>1. Input Your Needs</h3>
+                <p>Specify the medical equipment or devices you’re looking for.</p>
+            </div>
+            <div class="step">
+                <h3>2. AI-Powered Matching</h3>
+                <p>Our AI analyzes market capabilities to find the best suppliers.</p>
+            </div>
+            <div class="step">
+                <h3>3. Get Perfect Matches</h3>
+                <p>Receive tailored supplier recommendations, no trade events needed.</p>
+            </div>
+        </div>
+        <textarea class="search-box" placeholder="🔍 Write in details what you need to find, where are you want the product, how many, the more detail you give the more AI can help you"></textarea>
+    </section>
+
+    <!-- Benefits -->
+    <section class="benefits">
+        <h2>Why MematchMarket?</h2>
+        <div class="benefit-list">
+            <div class="benefit">
+                <h3>Save Time</h3>
+                <p>Find suppliers quickly, skipping lengthy summits and searches.</p>
+            </div>
+            <div class="benefit">
+                <h3>Increase Efficiency</h3>
+                <p>Boost your team’s productivity with precise supplier matches.</p>
+            </div>
+            <div class="benefit">
+                <h3>Wide Variety</h3>
+                <p>Access a diverse range of medical equipment suppliers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="testimonials-content" style="display: flex; justify-content: space-between; max-width: 1200px; margin: 0 auto; padding: 4rem 2rem;">
+            <div class="graphic-section" style="flex: 1; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding-right: 10rem;">
+                <img src="dr1-modified.png" style="width: 205px; height: 205px; border-radius: 10px; margin-bottom: 2rem; margin-left: 8rem;">
+                <div style="display: flex; justify-content: space-between; width: 100%;">
+                    <img src="dr2-modified.png" alt="Abstract 2" class="bottom-left" style="width: 200px; height: 200px; border-radius: 10px; margin-right: 1rem;">
+                    <img src="dr3-modified.png" alt="Abstract 3" class="bottom-right" style="width: 200px; height: 200px; border-radius: 10px;">
+                </div>
+            </div>
+            <div class="text-content" style="flex: 1; padding-left: 2rem;">
+                <h2 style="margin-bottom: 1.5rem;">What Our Users Say</h2>
+                <div class="testimonial-box" style="background: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 1.5rem; text-align: left;">
+                    <p>"MematchMarket’s AI saved us weeks of supplier research. Highly recommend!"</p>
+                    <cite>- Dr. Anna Müller, Clinic Manager</cite>
+                </div>
+                <div class="testimonial-box" style="background: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 1.5rem; text-align: left;">
+                    <p>"No more trade show chaos—MematchMarket connected us with top suppliers instantly."</p>
+                    <cite>- Mark Schmidt, Medical Device CEO</cite>
+                </div>
+                <a href="#signup" class="cta-button" style="background-color: #00bfff; color: #fff; padding: 0.8rem 2rem; text-decoration: none; border-radius: 25px; font-weight: 600; font-size: 1.1rem; transition: transform 0.3s ease, box-shadow 0.3s ease; display: inline-block; margin: 0 0.5rem;">Join Today, Share Story YOUR Tomorrow</a>
+            </div>
+        </div>
+    </section>
+
+   <!-- Our Story -->
+<section class="our-story">
+  <div class="our-story-content">
+    <!-- Left Column -->
+    <div class="left-column">
+      <h2>Our Story</h2>
+      <p>
+        We began our journey as entrepreneurs in Iran and made the difficult decision to move to Germany to build something bigger.
+        It wasn’t an easy choice — leaving our home and starting over. But with a shared vision, we pursued a master’s degree in
+        entrepreneurship and launched MedmatchMarket to simplify and improve medical sourcing for professionals everywhere.
+      </p>
+      <a href="#learn-more" class="cta-button">Learn More</a>
+      <a href="#meet-team" class="cta-button">Meet the Team</a>
+    </div>
+
+    <!-- Right Column -->
+    <div class="right-column">
+      <div class="info-square">
+        <div>
+          <h3>Our Mission</h3>
+          <p>Improving global medical sourcing through smart connections.</p>
+        </div>
+      </div>
+      <div class="info-square">
+        <div>
+          <h3>Innovation</h3>
+          <p>Combining AI with supplier transparency.</p>
+        </div>
+      </div>
+      <div class="info-square">
+        <div>
+          <h3>Trust</h3>
+          <p>Built by healthcare professionals, for professionals.</p>
+        </div>
+      </div>
+      <div class="info-square">
+        <div>
+          <h3>Growth</h3>
+          <p>From startup to marketplace — made with purpose.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Sign-Up Form -->
+    <section id="signup" class="signup">
+        <h2>Sign Up for Early Access</h2>
+        <form action="https://your-mailchimp-url" method="post">
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+        </form>
+        <p>Be the first to experience AI-driven supplier matching!</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>MedmatchMarket</h3>
+                <p>Smarter medical sourcing starts here.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <a href="#features">Features</a>
+                <a href="#products">Products</a>
+                <a href="#about">About Us</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#warranty">Warranty</a>
+                <a href="#shipping">Shipping Info</a>
+            </div>
+            <div class="footer-column">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
+                    <a href="#instagram"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="#twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="#linkedin"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 MedmatchMarket. All rights reserved.</p>
+            <div class="payment-icons" style="display: flex; gap: 1rem; font-size: 0.9rem; color: #ccc;">
+                <span>Visa</span>
+                <span>Mastercard</span>
+                <span>PayPal</span>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Cookie Consent Pop-up -->
+    <div id="cookie-consent">
+        <p>We use cookies to enhance your experience. <a href="#privacy">Learn more</a></p>
+        <div>
+            <button id="accept-cookies">Accept</button>
+            <button id="reject-cookies">Reject</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cookieConsent = document.getElementById('cookie-consent');
+            const acceptButton = document.getElementById('accept-cookies');
+            const rejectButton = document.getElementById('reject-cookies');
+
+            acceptButton.addEventListener('click', function() {
+                cookieConsent.style.display = 'none';
+            });
+            rejectButton.addEventListener('click', function() {
+                cookieConsent.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
